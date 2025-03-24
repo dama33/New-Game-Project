@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkldbtyq531v2"]
+[gd_scene load_steps=5 format=3 uid="uid://bkldbtyq531v2"]
 
 [ext_resource type="PackedScene" uid="uid://dnsvq2ljshwsf" path="res://player.tscn" id="1_u52ul"]
-[ext_resource type="Script" uid="uid://b68uwuxyci4if" path="res://block.gd" id="2_vonw3"]
+[ext_resource type="PackedScene" uid="uid://7bumajleonjm" path="res://block.tscn" id="2_vonw3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vonw3"]
 size = Vector3(30, 2, 60)
@@ -9,23 +9,14 @@ size = Vector3(30, 2, 60)
 [sub_resource type="BoxShape3D" id="BoxShape3D_oi3di"]
 size = Vector3(30, 2, 60)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_u52ul"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vonw3"]
-albedo_color = Color(1, 0, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_oi3di"]
-material = SubResource("StandardMaterial3D_vonw3")
-
 [node name="Level" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0.493818, -0.662346, 0.563419, -0.078381, 0.61139, 0.787438, -0.0103626, 13.68, 5.755)
 shadow_enabled = true
 
-[node name="Node3D" parent="." node_paths=PackedStringArray("first_person_camera") instance=ExtResource("1_u52ul")]
+[node name="Player" parent="." instance=ExtResource("1_u52ul")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0053, 0)
-first_person_camera = NodePath("Pivot/FirstPersonCamera")
 
 [node name="Floor" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
@@ -37,12 +28,5 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_oi3di")
 
-[node name="Block" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.672931, -16.5937)
-script = ExtResource("2_vonw3")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Block"]
-shape = SubResource("BoxShape3D_u52ul")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Block"]
-mesh = SubResource("BoxMesh_oi3di")
+[node name="Block" parent="." instance=ExtResource("2_vonw3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54453, -20.6511)

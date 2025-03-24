@@ -9,8 +9,9 @@ size = Vector3(0.3, 0.3, 0.9)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
 
-[node name="Node3D" type="CharacterBody3D" node_paths=PackedStringArray("level_camera", "pivot", "bulletSpawner")]
+[node name="Node3D" type="CharacterBody3D" node_paths=PackedStringArray("first_person_camera", "level_camera", "pivot", "bulletSpawner")]
 script = ExtResource("1_4flbx")
+first_person_camera = NodePath("Pivot/FirstPersonCamera")
 level_camera = NodePath("LevelCamera")
 pivot = NodePath("Pivot")
 bulletSpawner = NodePath("Pivot/Arm/BulletSpawner")

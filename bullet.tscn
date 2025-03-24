@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccewi3bs3bd2j"]
+[gd_scene load_steps=4 format=3 uid="uid://ccewi3bs3bd2j"]
 
 [ext_resource type="Script" uid="uid://dgigddavpj3qy" path="res://bullet.gd" id="1_v7oki"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_v7oki"]
 
-[node name="Bullet" type="Node3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_v7oki"]
+radius = 0.211089
+
+[node name="Bullet" type="Area3D"]
 script = ExtResource("1_v7oki")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -17,5 +20,8 @@ process_callback = 0
 wait_time = 5.0
 one_shot = true
 autostart = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_v7oki")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

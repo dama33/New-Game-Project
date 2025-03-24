@@ -22,7 +22,7 @@ func _physics_process(delta: float) -> void:
 	velocity.z = inputDirection.z * speed * delta
 	move_and_slide()
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("change_camera"):
 		if is_first_person:
 			level_camera.current = true

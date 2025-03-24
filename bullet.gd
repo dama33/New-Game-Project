@@ -1,11 +1,12 @@
-extends Node3D
-var velocity
-var speed = 30
+extends Area3D
+class_name Bullet
+var speed = 20
+var attack = Attack.new(1)
 
-func _physics_process(delta: float) -> void:
-	
+
+func _physics_process(delta: float):
 	position += transform.basis * Vector3(0,0, -speed) * delta
 
 
-func _on_timer_timeout() -> void:
+func _on_timer_timeout():
 	queue_free()
