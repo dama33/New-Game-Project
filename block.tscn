@@ -24,7 +24,7 @@ disabled = true
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("3_e2bb5")]
 health_component = NodePath("../HealthComponent")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtboxComponent"]
+[node name="Hurtbox" type="CollisionShape3D" parent="HurtboxComponent"]
 shape = SubResource("BoxShape3D_u52ul")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]

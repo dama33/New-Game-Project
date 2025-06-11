@@ -5,4 +5,6 @@
 [node name="HurtboxComponent" type="Area3D"]
 script = ExtResource("1_f5427")
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]

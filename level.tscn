@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkldbtyq531v2"]
+[gd_scene load_steps=9 format=3 uid="uid://bkldbtyq531v2"]
 
 [ext_resource type="PackedScene" uid="uid://dnsvq2ljshwsf" path="res://player.tscn" id="1_u52ul"]
 [ext_resource type="PackedScene" uid="uid://7bumajleonjm" path="res://block.tscn" id="2_vonw3"]
+[ext_resource type="PackedScene" uid="uid://wjscx7l25mq2" path="res://button.tscn" id="3_f2txt"]
+[ext_resource type="PackedScene" uid="uid://dxqa3ofydqkqi" path="res://door.tscn" id="4_1ainy"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vonw3"]
 size = Vector3(30, 2, 60)
@@ -9,7 +11,14 @@ size = Vector3(30, 2, 60)
 [sub_resource type="BoxShape3D" id="BoxShape3D_oi3di"]
 size = Vector3(30, 2, 60)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vonw3"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oi3di"]
+albedo_color = Color(0.858824, 0, 0, 1)
+
 [node name="Level" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000116348, 0.0133495, -0.0650105)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0.493818, -0.662346, 0.563419, -0.078381, 0.61139, 0.787438, -0.0103626, 13.68, 5.755)
@@ -19,7 +28,7 @@ shadow_enabled = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0053, 0)
 
 [node name="Floor" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+transform = Transform3D(0.665, 0, 0, 0, 0.665, 0, 0, 0, 0.665, 0, -0.683235, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
 mesh = SubResource("BoxMesh_vonw3")
@@ -30,3 +39,21 @@ shape = SubResource("BoxShape3D_oi3di")
 
 [node name="Block" parent="." instance=ExtResource("2_vonw3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54453, -20.6511)
+
+[node name="BackWall" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.506, 3.6543, -2.56811)
+size = Vector3(1, 8.30859, 46.9386)
+material = SubResource("StandardMaterial3D_vonw3")
+
+[node name="FrontWall" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5337, 3.6543, -2.56811)
+size = Vector3(1, 8.30859, 46.9386)
+material = SubResource("StandardMaterial3D_oi3di")
+
+[node name="Button" parent="FrontWall" instance=ExtResource("3_f2txt")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.42298, -0.400092, -17.6962)
+
+[node name="Door" parent="FrontWall" instance=ExtResource("4_1ainy")]
+transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -0.588095, -2.66196, -16.0562)
+
+[connection signal="button_activated" from="FrontWall/Button" to="FrontWall/Door" method="_on_button_button_activated"]
