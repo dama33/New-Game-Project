@@ -11,7 +11,7 @@ func _ready() -> void:
 func _on_button_button_activated() -> void:
 	activated = !activated
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if(activated):
 		rotation.y = lerp(rotation.y, ending_rotation,.05)
 	else:

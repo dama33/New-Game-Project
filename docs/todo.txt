@@ -1,0 +1,12 @@
+priorities:
+	
+BUGS:
+* clamp for view is setting on camera enter, instead of being clamped to the same normal view angle in first person
+
+IN PROGRESS:
+* making enemy for combat CURRENTLY WORKING ON THIS
+* add minimap for clarity.  Want to be able to see walls around you and maybe enemy position
+
+DONE:
+1. making button that interacts with environment (open door maybe?) DONE kinda
+2. make the camera swing from side view to new location (first person, other side, etc.) MOSTLY DONE (doesnt go to first person)
