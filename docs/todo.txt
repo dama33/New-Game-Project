@@ -2,6 +2,7 @@ priorities:
 	
 BUGS:
 * clamp for view is setting on camera enter, instead of being clamped to the same normal view angle in first person
+* camera is fucked up, try to figure out how to set it to the camera position instead of individual variables
 
 IN PROGRESS:
 * making enemy for combat CURRENTLY WORKING ON THIS

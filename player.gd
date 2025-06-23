@@ -46,6 +46,7 @@ func _process(_delta: float) -> void:
 			Input.warp_mouse(mouse_pos)
 		else:
 			is_first_person = true
+			#This is causing the issue with the jarring camera start
 			rotation = pivot.rotation
 			pivot.rotation = Vector3.ZERO
 			mouse_pos = get_viewport().get_mouse_position()
@@ -57,14 +58,16 @@ func _process(_delta: float) -> void:
 			final_rotation_y *= -1
 	if is_first_person:
 		if abs(%LevelCamera.position.x-%FirstPersonCamera.position.x) > 0.001 && abs(%LevelCamera.rotation.y-%FirstPersonCamera.rotation.y) > 0.001:
-			%LevelCamera.position = %LevelCamera.position.lerp(%FirstPersonCamera.position,.1)
+			%LevelCamera.global_position = %LevelCamera.global_position.lerp(%FirstPersonCamera.global_position,.1)
 			%LevelCamera.rotation = %LevelCamera.rotation.lerp(%FirstPersonCamera.rotation,.1)
 		else:
 			first_person_camera.current = true
 	else:
-		if abs(float(final_position_x-%LevelCamera.position.x)) > 0.001 && abs(float(%LevelCamera.rotation.y != final_rotation_y)) > 0.001:
-			%LevelCamera.position = %LevelCamera.position.lerp(camera_position,.1)
-			%LevelCamera.rotation = %LevelCamera.rotation.lerp(camera_rotation,.1)
+		if abs(float(final_position_x-%LevelCamera.position.x)) > 0.001 && abs(float(final_rotation_y-%LevelCamera.rotation.y)) > 0.001:
+			%LevelCamera.position.x = lerp(%LevelCamera.position.x,final_position_x,.1)
+			#TODO remove this, try to work with vector lerping
+			%LevelCamera.position.y = lerp(%LevelCamera.position.y,camera_position.y,.1)
+			%LevelCamera.rotation.y = lerp(%LevelCamera.rotation.y,final_rotation_y,.1)
 					
 func _input(event: InputEvent) -> void:
 	if is_first_person && first_person_camera.current:
