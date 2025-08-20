@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkldbtyq531v2"]
+[gd_scene load_steps=10 format=3 uid="uid://bkldbtyq531v2"]
 
 [ext_resource type="PackedScene" uid="uid://dnsvq2ljshwsf" path="res://player.tscn" id="1_u52ul"]
 [ext_resource type="PackedScene" uid="uid://7bumajleonjm" path="res://block.tscn" id="2_vonw3"]
 [ext_resource type="PackedScene" uid="uid://wjscx7l25mq2" path="res://button.tscn" id="3_f2txt"]
 [ext_resource type="PackedScene" uid="uid://dxqa3ofydqkqi" path="res://door.tscn" id="4_1ainy"]
+[ext_resource type="PackedScene" uid="uid://c3q3v5r6nduqo" path="res://enemy.tscn" id="5_f2txt"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vonw3"]
 size = Vector3(30, 2, 60)
@@ -55,4 +56,20 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.422
 [node name="Door" parent="FrontWall" instance=ExtResource("4_1ainy")]
 transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -0.588095, -2.66196, -16.0562)
 
+[node name="Enemy" parent="." instance=ExtResource("5_f2txt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 0.981764, 12.3853)
+ammo = 20
+shot_time = 0.05
+reload_time = 4.0
+
+[node name="Enemy2" parent="." instance=ExtResource("5_f2txt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.901309, 14.7875)
+health = 5
+ammo = 5
+shot_time = 0.5
+reload_time = 0.5
+
 [connection signal="button_activated" from="FrontWall/Button" to="FrontWall/Door" method="_on_button_button_activated"]
+
+[editable path="Enemy2"]
+[editable path="Enemy2/HurtboxComponent"]

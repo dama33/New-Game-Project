@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3q3v5r6nduqo"]
+[gd_scene load_steps=12 format=3 uid="uid://c3q3v5r6nduqo"]
 
 [ext_resource type="Script" uid="uid://dtqjoscamhgfv" path="res://components/health_component.gd" id="1_4gyqm"]
 [ext_resource type="Script" uid="uid://ojvdo3w35xgf" path="res://enemy.gd" id="1_iifgy"]
-[ext_resource type="Script" uid="uid://2r3m2jbolk7a" path="res://components/hurtbox_component.gd" id="2_qi2p4"]
-[ext_resource type="Script" uid="uid://cfp7mqofhq2bo" path="res://shooting_component.gd" id="3_qi2p4"]
+[ext_resource type="Script" uid="uid://cfp7mqofhq2bo" path="res://components/shooting_component.gd" id="3_qi2p4"]
+[ext_resource type="PackedScene" uid="uid://d036qgb15y0tm" path="res://components/hurtbox_component.tscn" id="4_iifgy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iifgy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_epg4t"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_epg4t"]
 albedo_color = Color(1, 0, 0, 1)
@@ -13,29 +15,72 @@ albedo_color = Color(1, 0, 0, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_3yqyl"]
 material = SubResource("StandardMaterial3D_epg4t")
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wujgv"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iifgy"]
+albedo_color = Color(0, 0, 0, 1)
 
-[node name="Enemy" type="CharacterBody3D"]
+[sub_resource type="BoxMesh" id="BoxMesh_epg4t"]
+material = SubResource("StandardMaterial3D_iifgy")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iifgy"]
+size = Vector3(73.0361, 6.7793, 21.8772)
+
+[node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("shooting_component", "hurtbox_component")]
 script = ExtResource("1_iifgy")
+health = 10
+shooting_component = NodePath("Node3D/ShootingComponent")
+hurtbox_component = NodePath("HurtboxComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_iifgy")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("CapsuleMesh_3yqyl")
 
 [node name="HealthComponent" type="Node3D" parent="."]
 script = ExtResource("1_4gyqm")
 metadata/_custom_type_script = "uid://dtqjoscamhgfv"
 
-[node name="HurtboxComponent" type="Area3D" parent="." node_paths=PackedStringArray("health_component")]
-script = ExtResource("2_qi2p4")
+[node name="HurtboxComponent" parent="." node_paths=PackedStringArray("health_component") instance=ExtResource("4_iifgy")]
+collision_layer = 0
+collision_mask = 4
 health_component = NodePath("../HealthComponent")
-metadata/_custom_type_script = "uid://2r3m2jbolk7a"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="HurtboxComponent"]
-shape = SubResource("CapsuleShape3D_wujgv")
+[node name="CollisionShape3D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CapsuleShape3D_epg4t")
 
-[node name="ShootingComponent" type="Marker3D" parent="."]
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
+mesh = SubResource("CapsuleMesh_3yqyl")
+skeleton = NodePath("../..")
+
+[node name="ShootingComponent" type="Marker3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.488852, -0.561637)
 script = ExtResource("3_qi2p4")
 metadata/_custom_type_script = "uid://cfp7mqofhq2bo"
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D"]
+transform = Transform3D(0.605, 0, 0, 0, 0.335, 0, 0, 0, 0.605, 0, 0.536015, -0.254073)
+mesh = SubResource("BoxMesh_epg4t")
+skeleton = NodePath("../..")
+
+[node name="ReloadTimer" type="Timer" parent="Node3D"]
+unique_name_in_owner = true
+wait_time = 4.0
+one_shot = true
+
+[node name="ShotTimer" type="Timer" parent="Node3D"]
+unique_name_in_owner = true
+wait_time = 0.05
+one_shot = true
+
+[node name="AggroRange" type="Area3D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AggroRange"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.740921, 2.88965, -0.0845299)
+shape = SubResource("BoxShape3D_iifgy")
+
+[connection signal="timeout" from="Node3D/ReloadTimer" to="." method="_on_reload_timer_timeout"]
+[connection signal="timeout" from="Node3D/ShotTimer" to="." method="_on_shot_timer_timeout"]
+[connection signal="area_entered" from="AggroRange" to="." method="_on_aggro_range_area_entered"]
+[connection signal="area_shape_exited" from="AggroRange" to="." method="_on_aggro_range_area_shape_exited"]
+
+[editable path="HurtboxComponent"]

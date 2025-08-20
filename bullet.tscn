@@ -8,6 +8,8 @@
 radius = 0.211089
 
 [node name="Bullet" type="Area3D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_v7oki")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

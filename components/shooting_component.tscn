@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dxt17lyntbm02"]
 
-[ext_resource type="Script" uid="uid://cfp7mqofhq2bo" path="res://shooting_component.gd" id="1_purqo"]
+[ext_resource type="Script" uid="uid://cfp7mqofhq2bo" path="res://components/shooting_component.gd" id="1_purqo"]
 
 [node name="ShootingComponent" type="Marker3D"]
 script = ExtResource("1_purqo")

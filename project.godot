@@ -58,5 +58,7 @@ shoot={
 
 [layer_names]
 
-3d_physics/layer_1="Hurtbox?"
+3d_physics/layer_1="Player Body"
+3d_physics/layer_2="Bullet"
+3d_physics/layer_3="Enemy Hurtbox"
 3d_physics/layer_16="Mouse Collision"

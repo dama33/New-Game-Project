@@ -1,2 +1,2 @@
 extends Node
-var bulletScene = preload("res://bullet.tscn")
+var bullet_scene = preload("res://bullet.tscn")

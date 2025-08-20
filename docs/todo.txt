@@ -1,13 +1,19 @@
-priorities:
-	
-BUGS:
-* clamp for view is setting on camera enter, instead of being clamped to the same normal view angle in first person
-* camera is fucked up, try to figure out how to set it to the camera position instead of individual variables
 
-IN PROGRESS:
-* making enemy for combat CURRENTLY WORKING ON THIS
+
+PRIORITIES IN ORDER:
+* fix the hurtboxes not working for enemy and player for combat
 * add minimap for clarity.  Want to be able to see walls around you and maybe enemy position
+* fix clamp issue
 
 DONE:
 1. making button that interacts with environment (open door maybe?) DONE kinda
-2. make the camera swing from side view to new location (first person, other side, etc.) MOSTLY DONE (doesnt go to first person)
+2. make the camera swing from side view to new location (first person, other side, etc.)
+3. gravity and jumping (need to figure out enemies pushing you off axis 
+4. making enemy for combat
+
+
+NOTES:
+Part of the issue for the clamp is it is making a local clamp for the pivot, but because the player is rotating, the local clamp is where the original look at value is.  We need to make sure that the player stays still, or the deg_to_rad function is based on global rotation rather than the rotation of the pivot
+another issue is getting off of the x axis.  This happens when you jump generally. i am trying to hard set my position back to 0 but it doesnt work sometimes
+clamp doesnt work if you move the mouse during camera transition (kind of done with that extra if statement but i should figure out root cause)
+might not be moving mouse during camera transition, might be in addition, but also if you go mouse behind the back and go into first person it breaks clamp
