@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PickupResource" load_steps=2 format=3 uid="uid://nagdnc3qrpcb"]
+
+[ext_resource type="Script" uid="uid://b6r1plqvvaw46" path="res://pickup_resource.gd" id="1_ppxmg"]
+
+[resource]
+script = ExtResource("1_ppxmg")
+id = null
+name = "First Person Power"

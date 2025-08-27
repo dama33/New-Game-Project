@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c3q3v5r6nduqo"]
+[gd_scene load_steps=13 format=3 uid="uid://c3q3v5r6nduqo"]
 
 [ext_resource type="Script" uid="uid://dtqjoscamhgfv" path="res://components/health_component.gd" id="1_4gyqm"]
 [ext_resource type="Script" uid="uid://ojvdo3w35xgf" path="res://enemy.gd" id="1_iifgy"]
@@ -22,12 +22,14 @@ albedo_color = Color(0, 0, 0, 1)
 material = SubResource("StandardMaterial3D_iifgy")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_iifgy"]
-size = Vector3(73.0361, 6.7793, 21.8772)
+size = Vector3(73.0361, 14.6951, 21.8772)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_iifgy"]
 
 [node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("shooting_component", "hurtbox_component")]
 script = ExtResource("1_iifgy")
 health = 10
-shooting_component = NodePath("Node3D/ShootingComponent")
+shooting_component = NodePath("Pivot/ShootingComponent")
 hurtbox_component = NodePath("HurtboxComponent")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -45,42 +47,46 @@ health_component = NodePath("../HealthComponent")
 [node name="CollisionShape3D" parent="HurtboxComponent" index="0"]
 shape = SubResource("CapsuleShape3D_epg4t")
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="Pivot" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D"]
-mesh = SubResource("CapsuleMesh_3yqyl")
-skeleton = NodePath("../..")
-
-[node name="ShootingComponent" type="Marker3D" parent="Node3D"]
+[node name="ShootingComponent" type="Marker3D" parent="Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.488852, -0.561637)
 script = ExtResource("3_qi2p4")
 metadata/_custom_type_script = "uid://cfp7mqofhq2bo"
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Node3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Pivot"]
+mesh = SubResource("CapsuleMesh_3yqyl")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Pivot"]
 transform = Transform3D(0.605, 0, 0, 0, 0.335, 0, 0, 0, 0.605, 0, 0.536015, -0.254073)
 mesh = SubResource("BoxMesh_epg4t")
 skeleton = NodePath("../..")
-
-[node name="ReloadTimer" type="Timer" parent="Node3D"]
-unique_name_in_owner = true
-wait_time = 4.0
-one_shot = true
-
-[node name="ShotTimer" type="Timer" parent="Node3D"]
-unique_name_in_owner = true
-wait_time = 0.05
-one_shot = true
 
 [node name="AggroRange" type="Area3D" parent="."]
 collision_layer = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AggroRange"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.740921, 2.88965, -0.0845299)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.740921, -1.06823, -0.0845299)
 shape = SubResource("BoxShape3D_iifgy")
 
-[connection signal="timeout" from="Node3D/ReloadTimer" to="." method="_on_reload_timer_timeout"]
-[connection signal="timeout" from="Node3D/ShotTimer" to="." method="_on_shot_timer_timeout"]
+[node name="MinimapIcon" type="MeshInstance3D" parent="."]
+layers = 524288
+mesh = SubResource("CapsuleMesh_iifgy")
+
+[node name="ReloadTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 4.0
+one_shot = true
+
+[node name="ShotTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.05
+one_shot = true
+
 [connection signal="area_entered" from="AggroRange" to="." method="_on_aggro_range_area_entered"]
 [connection signal="area_shape_exited" from="AggroRange" to="." method="_on_aggro_range_area_shape_exited"]
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
+[connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
 
 [editable path="HurtboxComponent"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://cjko0yk1qtx13"]
+
+[ext_resource type="Script" uid="uid://baxdee2t100uh" path="res://pickup.gd" id="1_weqpt"]
+[ext_resource type="Resource" uid="uid://nagdnc3qrpcb" path="res://resources/first_person_pickup.tres" id="2_amdaw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0tmqx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwgqt"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_jv4fb"]
+material = SubResource("StandardMaterial3D_bwgqt")
+
+[node name="Pickup" type="Node3D"]
+script = ExtResource("1_weqpt")
+pickup_resource = ExtResource("2_amdaw")
+
+[node name="PickupArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PickupArea"]
+transform = Transform3D(1.31, 0, 0, 0, 1.31, 0, 0, 0, 1.31, 0, 0, 0)
+shape = SubResource("BoxShape3D_0tmqx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_jv4fb")
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]

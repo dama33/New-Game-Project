@@ -24,6 +24,7 @@ enum State {
 }
 
 func _ready() -> void:
+	SignalBus.pickup_acquired.connect(_pickup_acquired)
 	level_camera.current = true
 	is_foreground_view = false
 	state = State.THIRD_PERSON
@@ -113,3 +114,7 @@ func _input(event: InputEvent) -> void:
 			inputDirection.z = Input.get_axis("right", "left")
 		else:
 			inputDirection.z = Input.get_axis("left", "right")
+
+func _pickup_acquired(pickup_resource: PickupResource):
+	print(pickup_resource.id)
+	print(PickupResource.Pickup.keys()[pickup_resource.name])

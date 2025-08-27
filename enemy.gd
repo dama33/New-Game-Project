@@ -28,7 +28,8 @@ func _process(delta: float) -> void:
 	if(state == State.RELOADING && %ReloadTimer.is_stopped()):
 		%ReloadTimer.start()
 	if aggro_target != null:
-		$Node3D.look_at(aggro_target.global_position)
+		$Pivot.look_at(aggro_target.global_position)
+		$CollisionShape3D.global_rotation = $Pivot.global_rotation
 		if(state != State.RELOADING && %ShotTimer.is_stopped()):
 			print("shot count:" , shot_count)
 			shooting_component.shoot(false)

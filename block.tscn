@@ -30,5 +30,6 @@ health_component = NodePath("../HealthComponent")
 shape = SubResource("BoxShape3D_u52ul")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
+layers = 524289
 mesh = SubResource("BoxMesh_oi3di")
 skeleton = NodePath("../Collision")

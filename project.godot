@@ -18,10 +18,15 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*res://global.gd"
+SignalBus="*res://signal_bus.gd"
 
 [dotnet]
 
 project/assembly_name="New Game Project"
+
+[global_group]
+
+player="is the player"
 
 [input]
 
