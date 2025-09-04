@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://dnsvq2ljshwsf"]
+[gd_scene load_steps=13 format=3 uid="uid://dnsvq2ljshwsf"]
 
 [ext_resource type="Script" uid="uid://cuw7tkspsy1fd" path="res://player.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://cfp7mqofhq2bo" path="res://components/shooting_component.gd" id="2_onrkg"]
 [ext_resource type="PackedScene" uid="uid://d036qgb15y0tm" path="res://components/hurtbox_component.tscn" id="3_hqtel"]
 [ext_resource type="Script" uid="uid://dtqjoscamhgfv" path="res://components/health_component.gd" id="4_hqtel"]
+[ext_resource type="PackedScene" uid="uid://ce7tt5xlxkrku" path="res://ui/pickup_popup.tscn" id="5_2hs0m"]
 [ext_resource type="Script" uid="uid://b3t51n8004xmg" path="res://minimap_camera.gd" id="5_sweqy"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
@@ -90,6 +91,15 @@ script = ExtResource("4_hqtel")
 MAX_HEALTH = 10
 metadata/_custom_type_script = "uid://dtqjoscamhgfv"
 
+[node name="PickupPopup" parent="." instance=ExtResource("5_2hs0m")]
+unique_name_in_owner = true
+
+[node name="Label" parent="PickupPopup" index="0"]
+offset_left = -233.0
+offset_top = 2.0
+offset_right = 236.0
+offset_bottom = 115.0
+
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 anchors_preset = 3
 anchor_left = 1.0
@@ -116,3 +126,4 @@ script = ExtResource("5_sweqy")
 player = NodePath("../../..")
 
 [editable path="HurtboxComponent"]
+[editable path="PickupPopup"]

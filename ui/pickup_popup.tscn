@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce7tt5xlxkrku"]
+
+[ext_resource type="Script" uid="uid://bp8x0mxwb0ipk" path="res://pickup_popup.gd" id="1_dp643"]
+
+[node name="PickupPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_dp643")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = -234.0
+offset_top = -3.0
+offset_right = 235.0
+offset_bottom = 110.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 7.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

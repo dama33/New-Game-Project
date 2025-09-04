@@ -6,6 +6,7 @@ var speed = 400
 @export var pivot:Node3D
 @export var shooting_component: ShootingComponent
 
+
 var is_foreground_view:bool
 var inputDirection = Vector3.ZERO
 var mouse_pos
@@ -18,12 +19,16 @@ var jump_velocity = 10
 var result
 var state: State
 
+#unlock booleans?
+var first_person_unlocked
+
 enum State {
 	FIRST_PERSON,
 	THIRD_PERSON
 }
 
 func _ready() -> void:
+	first_person_unlocked = false
 	SignalBus.pickup_acquired.connect(_pickup_acquired)
 	level_camera.current = true
 	is_foreground_view = false
@@ -52,7 +57,7 @@ func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("shoot"):
 		shooting_component.shoot(true)
 	
-	if Input.is_action_just_pressed("change_camera"):
+	if Input.is_action_just_pressed("change_camera") && first_person_unlocked:
 		if state == State.FIRST_PERSON:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			level_camera.current = true
@@ -118,3 +123,8 @@ func _input(event: InputEvent) -> void:
 func _pickup_acquired(pickup_resource: PickupResource):
 	print(pickup_resource.id)
 	print(PickupResource.Pickup.keys()[pickup_resource.name])
+	match pickup_resource.name:
+		PickupResource.Pickup.FIRST_PERSON_POWER:
+			first_person_unlocked = true
+			%PickupPopup.pickup_resource.description = pickup_resource.description
+			%PickupPopup.pickup_resource.emit_changed()

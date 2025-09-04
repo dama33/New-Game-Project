@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_ppxmg")
-id = null
-name = "First Person Power"
+id = 0
+name = 0
+description = "Press right click to go into first person mode. This allows you to aim into the foreground and background"
