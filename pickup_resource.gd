@@ -6,5 +6,6 @@ class_name PickupResource
 @export var description: String
 
 enum Pickup{
-	FIRST_PERSON_POWER
+	FIRST_PERSON_POWER,
+	WALL_CLING_POWER
 }

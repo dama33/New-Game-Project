@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PickupResource" load_steps=2 format=3 uid="uid://dl6a6qvofta6n"]
+
+[ext_resource type="Script" uid="uid://b6r1plqvvaw46" path="res://pickup_resource.gd" id="1_ecwse"]
+
+[resource]
+script = ExtResource("1_ecwse")
+id = 1
+name = 1
+description = "You are now able to cling on walls and jump off of them by pressing the spacebar.  Press down to dismount a wall"
+metadata/_custom_type_script = "uid://b6r1plqvvaw46"

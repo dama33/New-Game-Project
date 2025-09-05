@@ -18,9 +18,11 @@ var gravity = -20
 var jump_velocity = 10
 var result
 var state: State
+var just_walljumped: bool = false
 
 #unlock booleans?
 var first_person_unlocked
+var wall_cling_unlocked
 
 enum State {
 	FIRST_PERSON,
@@ -29,6 +31,7 @@ enum State {
 
 func _ready() -> void:
 	first_person_unlocked = false
+	wall_cling_unlocked = false
 	SignalBus.pickup_acquired.connect(_pickup_acquired)
 	level_camera.current = true
 	is_foreground_view = false
@@ -42,18 +45,34 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if state == State.FIRST_PERSON:
 		inputDirection.z = 0
-	velocity.z = inputDirection.z * speed * delta
-	#this has to be fixed
+	if is_on_floor() || is_on_wall():
+		just_walljumped = false
+		velocity.z = inputDirection.z * speed * delta
+	elif !is_on_floor() && inputDirection!=Vector3.ZERO && !just_walljumped:
+		velocity.z = inputDirection.z * speed * delta
+		
+	#fix this	
 	if position.x < 0 || position.x > 0:
 		position.x = 0
 		
-	if !is_on_floor():
+	if !is_on_floor() && !(is_on_wall() && wall_cling_unlocked):
 		velocity.y += gravity*delta
-	elif state == State.THIRD_PERSON && Input.is_action_just_pressed("jump"):
-		velocity.y = jump_velocity
+	elif state == State.THIRD_PERSON && (is_on_floor() || is_on_wall()) && (Input.is_action_just_pressed("jump") || Input.is_action_just_pressed("down")):
+		if Input.is_action_just_pressed("jump"):
+			if is_on_wall() && wall_cling_unlocked:
+				just_walljumped = true
+				velocity = get_wall_normal() * speed * delta
+			velocity.y = jump_velocity
+		elif is_on_wall() && Input.is_action_just_pressed("down"):
+			velocity = get_wall_normal()
+			
+	elif is_on_wall() && wall_cling_unlocked:
+		velocity.y = 0
+	
+	
 	move_and_slide()
 	
-func _process(_delta: float) -> void:
+func _process(_delta: float) -> void:	
 	if Input.is_action_just_pressed("shoot"):
 		shooting_component.shoot(true)
 	
@@ -81,6 +100,7 @@ func _process(_delta: float) -> void:
 			is_foreground_view = !is_foreground_view
 			%CameraPosition.position.x *= -1
 			%CameraPosition.rotation.y *= -1
+			%MinimapCamera.rotation.y *= -1
 	#Swooshing camera remnants
 	#if is_first_person:
 		#if abs(%LevelCamera.position.x-%FirstPersonCamera.position.x) > 0.001 && abs(%LevelCamera.rotation.y-%FirstPersonCamera.rotation.y) > 0.001:
@@ -123,8 +143,12 @@ func _input(event: InputEvent) -> void:
 func _pickup_acquired(pickup_resource: PickupResource):
 	print(pickup_resource.id)
 	print(PickupResource.Pickup.keys()[pickup_resource.name])
+	
 	match pickup_resource.name:
 		PickupResource.Pickup.FIRST_PERSON_POWER:
 			first_person_unlocked = true
-			%PickupPopup.pickup_resource.description = pickup_resource.description
-			%PickupPopup.pickup_resource.emit_changed()
+		PickupResource.Pickup.WALL_CLING_POWER:
+			wall_cling_unlocked = true
+			
+	%PickupPopup.pickup_resource.description = pickup_resource.description
+	%PickupPopup.pickup_resource.emit_changed()
