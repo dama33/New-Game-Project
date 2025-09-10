@@ -55,18 +55,22 @@ func _physics_process(delta: float) -> void:
 	if position.x < 0 || position.x > 0:
 		position.x = 0
 		
-	if !is_on_floor() && !(is_on_wall() && wall_cling_unlocked):
+	if !is_on_floor() && !(is_on_wall() && wall_cling_unlocked && Input.is_action_pressed("wall_cling")):
 		velocity.y += gravity*delta
+		velocity.y = clamp(velocity.y, -jump_velocity, jump_velocity)
+		print(velocity.y)
 	elif state == State.THIRD_PERSON && (is_on_floor() || is_on_wall()) && (Input.is_action_just_pressed("jump") || Input.is_action_just_pressed("down")):
 		if Input.is_action_just_pressed("jump"):
-			if is_on_wall() && wall_cling_unlocked:
+			if is_on_wall() && wall_cling_unlocked && Input.is_action_pressed("wall_cling"):
 				just_walljumped = true
 				velocity = get_wall_normal() * speed * delta
-			velocity.y = jump_velocity
+				velocity.y = jump_velocity
+			if is_on_floor():
+				velocity.y = jump_velocity
 		elif is_on_wall() && Input.is_action_just_pressed("down"):
+			just_walljumped = true
 			velocity = get_wall_normal()
-			
-	elif is_on_wall() && wall_cling_unlocked:
+	elif is_on_wall() && wall_cling_unlocked && Input.is_action_pressed("wall_cling"):
 		velocity.y = 0
 	
 	

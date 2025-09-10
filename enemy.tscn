@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://c3q3v5r6nduqo"]
+[gd_scene load_steps=15 format=3 uid="uid://c3q3v5r6nduqo"]
 
 [ext_resource type="Script" uid="uid://dtqjoscamhgfv" path="res://components/health_component.gd" id="1_4gyqm"]
 [ext_resource type="Script" uid="uid://ojvdo3w35xgf" path="res://enemy.gd" id="1_iifgy"]
 [ext_resource type="Script" uid="uid://cfp7mqofhq2bo" path="res://components/shooting_component.gd" id="3_qi2p4"]
 [ext_resource type="PackedScene" uid="uid://d036qgb15y0tm" path="res://components/hurtbox_component.tscn" id="4_iifgy"]
+[ext_resource type="PackedScene" uid="uid://c0t0j5b247jkh" path="res://ui/progress_bar.tscn" id="5_epg4t"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_iifgy"]
 
@@ -25,6 +26,9 @@ material = SubResource("StandardMaterial3D_iifgy")
 size = Vector3(73.0361, 14.6951, 21.8772)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_iifgy"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3yqyl"]
+viewport_path = NodePath("Sprite3D/SubViewport")
 
 [node name="Enemy" type="CharacterBody3D" node_paths=PackedStringArray("shooting_component", "hurtbox_component")]
 script = ExtResource("1_iifgy")
@@ -84,9 +88,22 @@ unique_name_in_owner = true
 wait_time = 0.05
 one_shot = true
 
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(3.57, 0, 0, 0, 3.57, 0, 0, 0, 3.57, 0, 1.42423, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_3yqyl")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+transparent_bg = true
+size = Vector2i(432, 197)
+
+[node name="ProgressBar" parent="Sprite3D/SubViewport" instance=ExtResource("5_epg4t")]
+unique_name_in_owner = true
+
 [connection signal="area_entered" from="AggroRange" to="." method="_on_aggro_range_area_entered"]
 [connection signal="area_shape_exited" from="AggroRange" to="." method="_on_aggro_range_area_shape_exited"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
 [connection signal="timeout" from="ShotTimer" to="." method="_on_shot_timer_timeout"]
 
 [editable path="HurtboxComponent"]
+[editable path="Sprite3D/SubViewport/ProgressBar"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://bkldbtyq531v2"]
+[gd_scene load_steps=21 format=4 uid="uid://bkldbtyq531v2"]
 
 [ext_resource type="PackedScene" uid="uid://dnsvq2ljshwsf" path="res://player.tscn" id="1_u52ul"]
 [ext_resource type="PackedScene" uid="uid://7bumajleonjm" path="res://block.tscn" id="2_vonw3"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://cjko0yk1qtx13" path="res://pickup.tscn" id="7_n6hdu"]
 [ext_resource type="Resource" uid="uid://nagdnc3qrpcb" path="res://resources/first_person_pickup.tres" id="8_i2t4f"]
 [ext_resource type="Resource" uid="uid://dl6a6qvofta6n" path="res://resources/wall_cling_pickup.tres" id="8_km5ld"]
+[ext_resource type="Resource" uid="uid://olphwo7hyfku" path="res://resources/background_enemy.tres" id="9_2orkt"]
+[ext_resource type="Resource" uid="uid://cw6fij7l1c1uk" path="res://resources/on_axis_enemy.tres" id="10_aicyk"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_vonw3"]
 size = Vector3(57.81, 2, 300)
@@ -93,14 +95,14 @@ layers = 524289
 size = Vector3(1, 8.30859, 46.9386)
 material = SubResource("StandardMaterial3D_vonw3")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Arrow" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.63173, 1.48213, -21.6698)
 
-[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Arrow"]
 transform = Transform3D(2.77, 0, 0, 0, 2.77, 0, 0, 0, 2.77, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_i2t4f")
 
-[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Arrow"]
 transform = Transform3D(2.77, 0, 0, 0, 2.77, 0, 0, 0, 2.77, 0, 0, 0)
 mesh = SubResource("ArrayMesh_8cye3")
 skeleton = NodePath("../..")
@@ -118,109 +120,126 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.422
 transform = Transform3D(-8.74228e-08, 0, 2, 0, 2, 0, -2, 0, -8.74228e-08, -0.588095, -2.66196, -20.5622)
 visible = false
 
-[node name="Enemy" parent="." instance=ExtResource("5_f2txt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 0.981764, 12.8431)
-ammo = 20
-shot_time = 0.05
-reload_time = 4.0
-
-[node name="Enemy2" parent="." instance=ExtResource("5_f2txt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.901309, 14.7875)
-health = 5
-ammo = 5
-shot_time = 0.5
-reload_time = 0.5
-
-[node name="MoveableWall" type="StaticBody3D" parent="." node_paths=PackedStringArray("ending_marker")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.020134, 3.63913, -26.6567)
-script = ExtResource("6_1ainy")
-ending_marker = NodePath("EndingPosition")
-
-[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="MoveableWall"]
-transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1.63483, 0)
-shape = SubResource("ConcavePolygonShape3D_1ainy")
-
-[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="MoveableWall"]
-transform = Transform3D(1, 0, 0, 0, 2.395, 0, 0, 0, 1, 0, 0, 0)
-layers = 524289
-mesh = SubResource("ArrayMesh_n6hdu")
-skeleton = NodePath("../..")
-
-[node name="EndingPosition" type="Marker3D" parent="MoveableWall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 0)
-
-[node name="Enemy3" parent="." instance=ExtResource("5_f2txt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 1.0148, -37.5063)
-ammo = 20
-shot_time = 0.05
-reload_time = 4.0
-
-[node name="Enemy4" parent="." instance=ExtResource("5_f2txt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 6.8308, -37.8552)
-ammo = 20
-shot_time = 0.05
-reload_time = 4.0
-
-[node name="Enemy5" parent="." instance=ExtResource("5_f2txt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 1.0148, -44.1372)
-ammo = 20
-shot_time = 0.05
-reload_time = 4.0
-
-[node name="Enemy6" parent="." instance=ExtResource("5_f2txt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 1.0148, -50.1696)
-ammo = 20
-shot_time = 0.05
-reload_time = 4.0
-
-[node name="Enemy8" parent="." instance=ExtResource("5_f2txt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 6.82821, -50.2593)
-ammo = 20
-shot_time = 0.05
-reload_time = 4.0
-
-[node name="Enemy9" parent="." instance=ExtResource("5_f2txt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 6.93551, -44.2494)
-ammo = 20
-shot_time = 0.05
-reload_time = 4.0
-
 [node name="FirstPersonPickup" parent="." instance=ExtResource("7_n6hdu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.071303, 1.43229, -11.5635)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.8119, 82.66)
 pickup_resource = ExtResource("8_i2t4f")
 
 [node name="WallClingPickup" parent="." instance=ExtResource("7_n6hdu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.52614, 23.7433)
 pickup_resource = ExtResource("8_km5ld")
 
-[node name="WalljumpWall" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0542908, 7.60054, -20.7148)
+[node name="Enemies" type="Node" parent="."]
 
-[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="WalljumpWall"]
-shape = SubResource("ConcavePolygonShape3D_1ainy")
+[node name="Enemy3" parent="Enemies" instance=ExtResource("5_f2txt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 1.0148, -37.5063)
+enemy_attack_resource = ExtResource("9_2orkt")
 
-[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="WalljumpWall"]
-transform = Transform3D(0.935, 0, 0, 0, 0.79, 0, 0, 0, 1, 0, -0.947486, 0)
-mesh = SubResource("ArrayMesh_n6hdu")
-skeleton = NodePath("../..")
+[node name="Enemy4" parent="Enemies" instance=ExtResource("5_f2txt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 6.8308, -37.8552)
+enemy_attack_resource = ExtResource("9_2orkt")
 
-[node name="ButtonFloor" type="StaticBody3D" parent="."]
+[node name="Enemy5" parent="Enemies" instance=ExtResource("5_f2txt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 1.0148, -44.1372)
+enemy_attack_resource = ExtResource("9_2orkt")
+
+[node name="Enemy6" parent="Enemies" instance=ExtResource("5_f2txt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 1.0148, -50.1696)
+enemy_attack_resource = ExtResource("9_2orkt")
+
+[node name="Enemy8" parent="Enemies" instance=ExtResource("5_f2txt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 6.82821, -50.2593)
+enemy_attack_resource = ExtResource("9_2orkt")
+
+[node name="Enemy9" parent="Enemies" instance=ExtResource("5_f2txt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 6.93551, -44.2494)
+enemy_attack_resource = ExtResource("9_2orkt")
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("5_f2txt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.67362, 0.981764, 12.8431)
+enemy_attack_resource = ExtResource("9_2orkt")
+
+[node name="Enemy2" parent="Enemies" instance=ExtResource("5_f2txt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.901309, 42.6233)
+health = 5
+enemy_attack_resource = ExtResource("10_aicyk")
+
+[node name="Obstacles" type="Node" parent="."]
+
+[node name="ButtonFloor" type="StaticBody3D" parent="Obstacles"]
 transform = Transform3D(0.49, 0, 0, 0, 0.00317281, -0.48999, 0, 0.48999, 0.00317281, 5.07702, 6.68628, -24.532)
 
-[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="ButtonFloor"]
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Obstacles/ButtonFloor"]
 transform = Transform3D(1, 0, 0, 0, 1, 4.65661e-10, 0, -4.65661e-10, 1, 0.630991, -1.84909, -0.0241222)
 shape = SubResource("ConcavePolygonShape3D_1ainy")
 
-[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="ButtonFloor"]
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Obstacles/ButtonFloor"]
 transform = Transform3D(0.935, 0, 0, 0, 0.79, 0, 0, 0, 1, 0, -0.947486, 0)
 mesh = SubResource("ArrayMesh_n6hdu")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
+
+[node name="WalljumpWall" type="StaticBody3D" parent="Obstacles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0542908, 7.60054, -20.7148)
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Obstacles/WalljumpWall"]
+shape = SubResource("ConcavePolygonShape3D_1ainy")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Obstacles/WalljumpWall"]
+transform = Transform3D(0.935, 0, 0, 0, 0.79, 0, 0, 0, 1, 0, -0.947486, 0)
+mesh = SubResource("ArrayMesh_n6hdu")
+skeleton = NodePath("../../..")
+
+[node name="MoveableWall" type="StaticBody3D" parent="Obstacles" node_paths=PackedStringArray("ending_marker")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.020134, 3.63913, -26.6567)
+script = ExtResource("6_1ainy")
+ending_marker = NodePath("EndingPosition")
+
+[node name="CSGBakedCollisionShape3D" type="CollisionShape3D" parent="Obstacles/MoveableWall"]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1.63483, 0)
+shape = SubResource("ConcavePolygonShape3D_1ainy")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="Obstacles/MoveableWall"]
+transform = Transform3D(1, 0, 0, 0, 2.395, 0, 0, 0, 1, 0, 0, 0)
+layers = 524289
+mesh = SubResource("ArrayMesh_n6hdu")
+skeleton = NodePath("../../..")
+
+[node name="EndingPosition" type="Marker3D" parent="Obstacles/MoveableWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22, 0, 0)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="Obstacles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.85921, 80.6743)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Obstacles/CSGCombiner3D"]
+size = Vector3(20.2225, 9.745, 20.4539)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Obstacles/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0297778, 1.22204, -9.09473)
+operation = 2
+size = Vector3(20.5395, 7.62662, 2.27026)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Obstacles/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0297778, 2.21427, -6.86594)
+operation = 2
+size = Vector3(20.5395, 5.64217, 2.27026)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Obstacles/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0297778, 3.03716, -4.61385)
+operation = 2
+size = Vector3(20.5395, 3.99638, 2.27026)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Obstacles/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0297778, 3.91028, -2.38294)
+operation = 2
+size = Vector3(20.5395, 2.25014, 2.27026)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Obstacles"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0408936, 6.06842, 50.8876)
+size = Vector3(24.6262, 6.94678, 1)
 
 [connection signal="button_activated" from="FrontWall/Button" to="FrontWall/Door" method="_on_button_button_activated"]
-[connection signal="button_activated" from="FrontWall/Button" to="MoveableWall" method="_on_button_button_activated"]
+[connection signal="button_activated" from="FrontWall/Button" to="Obstacles/MoveableWall" method="_on_button_button_activated"]
 
 [editable path="Player"]
 [editable path="Player/HurtboxComponent"]
 [editable path="Player/PickupPopup"]
-[editable path="Enemy2"]
-[editable path="Enemy2/HurtboxComponent"]

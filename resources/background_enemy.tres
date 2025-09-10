@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyAttackResource" load_steps=2 format=3 uid="uid://olphwo7hyfku"]
+
+[ext_resource type="Script" uid="uid://bhfmfvg2qapys" path="res://resources/enemy_attack_resource.gd" id="1_hqxev"]
+
+[resource]
+script = ExtResource("1_hqxev")
+ammo = 20
+shot_time = 0.05
+reload_time = 4.0
+metadata/_custom_type_script = "uid://bhfmfvg2qapys"

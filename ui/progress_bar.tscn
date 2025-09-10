@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://c0t0j5b247jkh"]
+
+[ext_resource type="Script" uid="uid://cfokwflwhkkst" path="res://progress_bar.gd" id="1_4usvg"]
+[ext_resource type="Texture2D" uid="uid://bwm7wg1nk42r3" path="res://textures/button_rectangle_depth_border.png" id="2_5rton"]
+[ext_resource type="Texture2D" uid="uid://dyrgxmje8e466" path="res://textures/button_rectangle_depth_gloss.png" id="3_hkq1o"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4usvg"]
+font_size = 41
+font_color = Color(0, 0, 0, 1)
+
+[node name="ProgressBar" type="TextureProgressBar"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -216.0
+offset_right = 216.0
+offset_bottom = 90.0
+grow_horizontal = 2
+nine_patch_stretch = true
+texture_under = ExtResource("2_5rton")
+texture_progress = ExtResource("3_hkq1o")
+script = ExtResource("1_4usvg")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.5
+offset_right = 57.5
+offset_bottom = 55.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_4usvg")
+horizontal_alignment = 1
